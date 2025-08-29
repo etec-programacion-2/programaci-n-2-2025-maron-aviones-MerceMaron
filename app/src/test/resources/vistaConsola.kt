@@ -33,7 +33,7 @@ object VistaConsola {
     fun mostrarResultados(tareas: List<TareaMantenimiento>){
         println ("Las tareas de mantenimiento que debe hacerle a su avión son: ")
         for (tarea in tareas){
-            println("- ${tarea.nombre}: ${tarea.descripcion}. Cada ${tarea.frecuenciaHoras} horas")
+            println("- ${tarea.tipo}: ${tarea.descripcion}. Cada ${tarea.horasIntervalo} horas")
         }
     }
 }
