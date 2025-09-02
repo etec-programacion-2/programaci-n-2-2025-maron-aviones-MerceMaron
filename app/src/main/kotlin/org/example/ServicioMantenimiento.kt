@@ -8,6 +8,7 @@
         Debe definir un método principal: calcularTareasPendientes(modeloMotor: String, horasVueloActuales: Int): List<TareaMantenimiento>.
     Estimación de Esfuerzo: 2 sesiones.
  */
+ package org.example
 
  interface ServicioMantenimiento {
     fun calcularTareasPendientes(modeloMotor: String, horasVueloActuales: Int): List<TareaMantenimiento>
