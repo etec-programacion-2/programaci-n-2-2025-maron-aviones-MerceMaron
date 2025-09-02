@@ -14,6 +14,7 @@
  Se proporciona un método estático (o propiedad) a través del cual se puede acceder a la única instancia de la clase. Cada vez que se llama a este método, se devuelve la misma instancia creada previamente
  
  */
+package org.example
 
 object VistaConsola {
     fun mostrarBienvenida(){
