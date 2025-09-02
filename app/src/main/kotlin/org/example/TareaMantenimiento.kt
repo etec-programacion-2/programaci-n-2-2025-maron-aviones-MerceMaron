@@ -7,5 +7,7 @@
         Debe existir una data class llamada TareaMantenimiento.
         Debe contener las propiedades: tipo (del tipo TipoTarea), horasIntervalo (Int), y descripcion (String).
     Estimación de Esfuerzo: 1 sesión. */
+    
+package org.example
 
 data class TareaMantenimiento(val tipo: TipoTarea, val horasIntervalo: Int, val descripción: String)
