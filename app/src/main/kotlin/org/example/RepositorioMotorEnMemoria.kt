@@ -9,7 +9,7 @@
         Los métodos de la interfaz deben operar sobre esa lista.
     Estimación de Esfuerzo: 2 sesiones.
  */
-package main.resources
+package org.example
 
 class RepositorioMotorEnMemoria: RepositorioMotor {
     private val motores = listOf(
