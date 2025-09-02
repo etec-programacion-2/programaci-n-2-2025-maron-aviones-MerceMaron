@@ -11,7 +11,7 @@
 
  */
 
-package main.resources
+package org.example
 
 class Motor (val modelo: String, val fabricante: String, val planMantenimiento:List<TareaMantenimiento>){
 }
