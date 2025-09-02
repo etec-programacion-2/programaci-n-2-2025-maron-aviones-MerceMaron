@@ -12,6 +12,7 @@ Criterios de Aceptación:
 
 Estimación de Esfuerzo: 3 sesiones.
  */
+package org.example
 
 class ServicioMantenimientoImpl (private val RepositorioMotor: RepositorioMotor) :  
 /* 
