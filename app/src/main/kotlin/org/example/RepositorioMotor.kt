@@ -10,7 +10,7 @@
 
  */
 
-package main.resources
+package org.example
 
 interface RepositorioMotor {
     fun obtenerPorModelo(modelo: String): Motor?
