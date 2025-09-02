@@ -9,6 +9,8 @@
     Estimación de Esfuerzo: 1 sesión.
  */
 
+package org.example
+
  enum class TipoTarea {CAMBIO_ACEITE, CAMBIO_FILTRO, INSPECCION_BUJIAS, REEMPLAZO_MAGNETOS, INSPECCION_GENERAL}
 
  
