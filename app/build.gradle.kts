@@ -18,18 +18,40 @@ repositories {
     mavenCentral()
 }
 
+val javafxVersion = "20"
+
+
 dependencies {
     // Use the Kotlin JUnit 5 integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 
     // Use the JUnit 5 integration.
     testImplementation(libs.junit.jupiter.engine)
-
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+    listOf("base", "controls", "fxml", "graphics").forEach { module ->
+        implementation("org.openjfx:javafx-$module:$javafxVersion") {
+            artifact {
+                classifier = "linux"
+            }
+        }
+    }
 }
+
+
+tasks.named<JavaExec>("run") {
+    val osName = "linux"
+    val javafxModules = listOf("javafx.controls", "javafx.fxml")
+
+    jvmArgs = listOf(
+        "--module-path", configurations.runtimeClasspath.get().asPath,
+        "--add-modules", javafxModules.joinToString(",")
+    )
+}
+
 
 // Apply a specific Java toolchain to ease working on different environments.
 java {
@@ -43,35 +65,24 @@ application {
     mainClass = "org.example.AppKt"
 }
 
+
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
 
-plugins {
-    kotlin("jvm") version "1.9.0"
-    application
-    id("org.openjfx.javafxplugin") version "0.0.14"
+tasks.test {
+    useJUnitPlatform()
+    filter {
+        isFailOnNoMatchingTests = false
+    }
 }
 
-group = "com.miapp"
-version = "1.0.0"
 
-repositories {
-    mavenCentral()
-}
 
-dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.openjfx:javafx-controls:19")
-    implementation("org.openjfx:javafx-fxml:19")
-}
 
-javafx {
-    version = "19"
-    modules = listOf("javafx.controls", "javafx.fxml")
-}
 
-application {
-    mainClass.set("com.miapp.MainKt")
-}
+
+
+
+
