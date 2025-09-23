@@ -17,25 +17,41 @@ import javafx.event.EventHandler
 import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.control.Label
+import javafx.scene.control.ChoiceBox
 import javafx.scene.layout.StackPane
 import javafx.stage.Stage
 
 class App : Application() {
     override fun start(primaryStage: Stage) {
-        val label = Label("¡Hola desde JavaFX en Linux!")
+        val label = Label("DATOS DEL AVION")
+        label.setTranslateX(-180.0)
+        label.setTranslateY(-180.0)
         val root = StackPane(label)
-        val scene = Scene(root, 400.0, 300.0)
+        val scene = Scene(root, 500.0, 400.0)
         primaryStage.title = "Mantenimineto de aviones"
 
+        //solucionar errores con los textfields
+        //TextField inputHorasVueloActuales = new TextField();
+        //Int horasVueloActuales = textField.getText();
+
+        //solucioar errores con el choicebox
+        val modeloMotor = ChoiceBox<String>()
+        modeloMotor.items.addAll("Motor A", "Motor B", "Motor C")
+        modeloMotor.setTranslateX(-70.0)
+        modeloMotor.setTranslateY(-150.0)
+        root.children.add(modeloMotor)
+
+        val labelModeloMotor = Label("Modelo de motor:")
+        labelModeloMotor.setTranslateX(-180.0)
+        labelModeloMotor.setTranslateY(-150.0)
+        root.children.add(labelModeloMotor)
+
+        //posicionar correctamente el botón
         val button = Button("Calcular")
         button.onAction = EventHandler<ActionEvent> {
-            label.text = "¡Botón presionado!" //en vez de poner esto, se debe desplegar una lista o tabla con las tareas de mantenimiento a realizar
+            label.text = "¡Botón presionado!" //en vez de poner esto, se debe desplegar una TableView con las tareas de mantenimiento a realizar
         }
         root.children.add(button)
-
-        listView= ListView<String>()
-        listView.getItems().addAll(SerivioMantenimientoImpl)
-        listView.getSelectionMode(SelectionMode.MULTIPLE)
 
         primaryStage.scene = scene
         primaryStage.show()
