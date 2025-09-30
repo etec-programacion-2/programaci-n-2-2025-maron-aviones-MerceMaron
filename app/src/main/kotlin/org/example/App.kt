@@ -1,9 +1,19 @@
+/*
+Título: Diseñar y construir la ventana principal de la aplicación con JavaFX.
+Descripción: Se creará la interfaz gráfica donde el usuario podrá introducir los datos del motor y ver los resultados.
+Objetivo de Aprendizaje: Fundamentos de JavaFX (Layouts, Controles) y separación Vista-Controlador.
+Prerrequisitos: Issue 4.2.
+Criterios de Aceptación:
+    Debe existir una ventana principal con campos de texto para el modelo y las horas de vuelo.
+    Debe haber un botón para Calcular y un área (ej: ListView o TableView) para mostrar las tareas resultantes.
+*/
+
+
 package org.example
 
 import javafx.application.Application
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleStringProperty
-import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.geometry.Insets
@@ -16,122 +26,8 @@ import javafx.scene.layout.VBox
 import javafx.stage.Modality
 import javafx.stage.Stage
 
-// ===== INTEGRACIÓN DE TUS CLASES EXISTENTES =====
+// Data class auxiliar para mostrar datos en TableView
 
-// Enum TipoTarea (de tu clase TipoTarea.kt)
-enum class TipoTarea(val descripcion: String) {
-    CAMBIO_ACEITE("Cambio de aceite"),
-    CAMBIO_FILTRO("Cambio de filtro"), 
-    INSPECCION_BUJIAS("Inspección de bujías"),
-    REEMPLAZO_MAGNETOS("Reemplazo de magnetos"),
-    INSPECCION_GENERAL("Inspección general")
-}
-
-// Data class TareaMantenimiento (adaptada de tu TareaMantenimiento.kt)
-data class TareaMantenimiento(
-    val tipo: TipoTarea,
-    val horasIntervalo: Int,
-    val descripcion: String
-) {
-    // Constructor adicional para compatibilidad con TableView
-    constructor(tipoStr: String, horasStr: String, descripcionStr: String, estadoStr: String) :
-        this(
-            TipoTarea.values().find { it.descripcion == tipoStr } ?: TipoTarea.INSPECCION_GENERAL,
-            horasStr.toIntOrNull() ?: 0,
-            descripcionStr
-        )
-}
-
-// Clase Motor (de tu Motor.kt)
-class Motor(
-    val modelo: String,
-    val fabricante: String,
-    val planMantenimiento: List<TareaMantenimiento>
-) {
-    var horasVueloActuales: Int = 0
-        private set
-    
-    fun actualizarHorasVuelo(nuevasHoras: Int) {
-        horasVueloActuales = nuevasHoras
-    }
-    
-    fun obtenerTareasPendientes(): List<TareaMantenimiento> {
-        return planMantenimiento.filter { tarea ->
-            horasVueloActuales >= tarea.horasIntervalo
-        }
-    }
-}
-
-// Interface RepositorioMotor (de tu RepositorioMotor.kt)
-interface RepositorioMotor {
-    fun obtenerPorModelo(modelo: String): Motor?
-    fun obtenerTodos(): List<Motor>
-}
-
-// Implementación RepositorioMotorEnMemoria (de tu RepositorioMotorEnMemoria.kt)
-class RepositorioMotorEnMemoria : RepositorioMotor {
-    private val motores = listOf(
-        Motor(
-            modelo = "A320",
-            fabricante = "CFM International",
-            planMantenimiento = listOf(
-                TareaMantenimiento(TipoTarea.CAMBIO_ACEITE, 25, "Cambio de aceite del motor"),
-                TareaMantenimiento(TipoTarea.INSPECCION_BUJIAS, 50, "Inspección y limpieza de bujías"),
-                TareaMantenimiento(TipoTarea.CAMBIO_FILTRO, 100, "Cambio de filtro de aire"),
-                TareaMantenimiento(TipoTarea.INSPECCION_GENERAL, 500, "Inspección general completa")
-            )
-        ),
-        Motor(
-            modelo = "B737",
-            fabricante = "Pratt & Whitney", 
-            planMantenimiento = listOf(
-                TareaMantenimiento(TipoTarea.CAMBIO_ACEITE, 30, "Cambio de aceite del motor"),
-                TareaMantenimiento(TipoTarea.CAMBIO_FILTRO, 75, "Cambio de filtros de combustible"),
-                TareaMantenimiento(TipoTarea.INSPECCION_BUJIAS, 150, "Inspección detallada de bujías"),
-                TareaMantenimiento(TipoTarea.REEMPLAZO_MAGNETOS, 300, "Reemplazo de magnetos")
-            )
-        ),
-        Motor(
-            modelo = "E190",
-            fabricante = "General Electric",
-            planMantenimiento = listOf(
-                TareaMantenimiento(TipoTarea.INSPECCION_GENERAL, 40, "Inspección general básica"),
-                TareaMantenimiento(TipoTarea.CAMBIO_ACEITE, 80, "Cambio completo de aceite"),
-                TareaMantenimiento(TipoTarea.CAMBIO_FILTRO, 200, "Cambio de todos los filtros")
-            )
-        )
-    )
-
-    override fun obtenerPorModelo(modelo: String): Motor? {
-        return motores.find { it.modelo == modelo }
-    }
-
-    override fun obtenerTodos(): List<Motor> {
-        return motores
-    }
-}
-
-// Interface ServicioMantenimiento (de tu ServicioMantenimiento.kt)
-interface ServicioMantenimiento {
-    fun calcularTareasPendientes(modeloMotor: String, horasVueloActuales: Int): List<TareaMantenimiento>
-}
-
-// Implementación ServicioMantenimientoImpl (de tu ServicioMantenimientoImpl.kt)
-class ServicioMantenimientoImpl(private val repositorioMotor: RepositorioMotor) : ServicioMantenimiento {
-    
-    override fun calcularTareasPendientes(modeloMotor: String, horasVueloActuales: Int): List<TareaMantenimiento> {
-        val motor = repositorioMotor.obtenerPorModelo(modeloMotor)
-            ?: throw IllegalArgumentException("El modelo de motor no existe")
-        
-        motor.actualizarHorasVuelo(horasVueloActuales)
-        
-        return motor.planMantenimiento.filter { tarea ->
-            horasVueloActuales % tarea.horasIntervalo == 0
-        }
-    }
-}
-
-// Data class para mostrar en TableView
 data class TareaParaTabla(
     val tipoProperty: SimpleStringProperty,
     val descripcionProperty: SimpleStringProperty,
@@ -139,7 +35,7 @@ data class TareaParaTabla(
     val estadoProperty: SimpleStringProperty
 ) {
     constructor(tarea: TareaMantenimiento, estado: String = "Pendiente") : this(
-        SimpleStringProperty(tarea.tipo.descripcion),
+        SimpleStringProperty(tarea.tipo.name),
         SimpleStringProperty(tarea.descripcion),
         SimpleIntegerProperty(tarea.horasIntervalo),
         SimpleStringProperty(estado)
@@ -151,9 +47,9 @@ data class TareaParaTabla(
     val estado: String get() = estadoProperty.get()
 }
 
-// ===== INTERFAZ GRÁFICA JAVAFX =====
 class AppJavaFX : Application() {
     
+    //se usan las clases que ya fueron creadas en el repositorio
     private val repositorio = RepositorioMotorEnMemoria()
     private val servicio = ServicioMantenimientoImpl(repositorio)
     private val historialTareas = mutableListOf<TareaParaTabla>()
@@ -240,6 +136,7 @@ class AppJavaFX : Application() {
                     return@EventHandler
                 }
                 
+                // Se usa ServicioMantenimiento
                 val tareasPendientes = servicio.calcularTareasPendientes(modeloSeleccionado, horas)
                 
                 if (tareasPendientes.isEmpty()) {
@@ -315,7 +212,7 @@ class AppJavaFX : Application() {
         val tareasParaTabla = tareas.map { TareaParaTabla(it, "Requerida") }
         tableView.items.addAll(tareasParaTabla)
         
-        // Si se ejecutaron tareas, agregarlas al historial
+        // Agregar al historial
         historialTareas.addAll(tareasParaTabla.map { 
             TareaParaTabla(
                 SimpleStringProperty(it.tipo),
@@ -426,7 +323,7 @@ class AppJavaFX : Application() {
     }
 }
 
-// Punto de entrada principal
+// Función main para ejecutar la aplicación JavaFX
 fun main() {
     Application.launch(AppJavaFX::class.java)
 }
