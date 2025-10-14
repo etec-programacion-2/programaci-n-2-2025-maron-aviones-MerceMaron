@@ -3,7 +3,8 @@
  *
  * This generated file contains a sample Kotlin application project to get you started.
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/9.0.0/userguide/building_java_projects.html in the Gradle documentation.
- 
+ */
+
 
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
@@ -46,29 +47,4 @@ application {
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
-}
-*/
-plugins {
-    kotlin("jvm") version "1.9.10"
-    application
-}
-
-repositories {
-    mavenCentral()
-}
-
-val javaFxVersion = "21.0.0"
-
-dependencies {
-    implementation(kotlin("stdlib"))
-    implementation("org.openjfx:javafx-controls:$javaFxVersion")
-    implementation("org.openjfx:javafx-fxml:$javaFxVersion")
-}
-
-application {
-    mainClass.set("MainKt") // Clase principal con función `main`
-}
-
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17)) // O tu versión de JDK
 }
