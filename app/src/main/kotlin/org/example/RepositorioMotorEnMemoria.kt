@@ -16,18 +16,29 @@ class RepositorioMotorEnMemoria: RepositorioMotor {
         Motor(
             modelo = "A320",
             fabricante = "CFM International",
-            planMantenimiento = TareaMantenimiento("Cambio de aceite", 10, "Sustituir el aceite del motor")
+            planMantenimiento = listOf(
+                TareaMantenimiento(TipoTarea.CAMBIO_ACEITE, 10, "Sustituir el aceite del motor"),
+                TareaMantenimiento(TipoTarea.CAMBIO_FILTRO, 20, "Reemplazar el filtro de aceite"),
+                TareaMantenimiento(TipoTarea.INSPECCION_GENERAL, 50, "Inspección completa del motor")
             )
         ),
         Motor(
             modelo = "B737",
             fabricante = "Pratt & Whitney",
-            planMantenimiento = TareaMantenimiento("Cambio de filtros", 7, "Limpiar o reemplazar los filtros de aire")
+            planMantenimiento = listOf(
+                TareaMantenimiento(TipoTarea.CAMBIO_FILTRO, 7, "Limpiar o reemplazar los filtros de aire"),
+                TareaMantenimiento(TipoTarea.INSPECCION_BUJIAS, 15, "Revisar el estado de las bujías"),
+                TareaMantenimiento(TipoTarea.INSPECCION_GENERAL, 30, "Inspección general del sistema")
+            )
         ),
         Motor(
             modelo = "E190",
             fabricante = "General Electric",
-            planMantenimiento = TareaMantenimiento("Inspección general", 20, "Revisión detallada de todos los sistemas y componentes para identificar daños ocultos, evaluar desgastes y cumplir con las normas de seguridad y aeronavegabilidad")          
+            planMantenimiento = listOf(
+                TareaMantenimiento(TipoTarea.CAMBIO_ACEITE, 12, "Cambio de aceite y lubricantes"),
+                TareaMantenimiento(TipoTarea.REEMPLAZO_MAGNETOS, 25, "Reemplazar magnetos"),
+                TareaMantenimiento(TipoTarea.INSPECCION_GENERAL, 20, "Revisión detallada de todos los sistemas y componentes para identificar daños ocultos, evaluar desgastes y cumplir con las normas de seguridad y aeronavegabilidad")
+            )
         )
     )
 

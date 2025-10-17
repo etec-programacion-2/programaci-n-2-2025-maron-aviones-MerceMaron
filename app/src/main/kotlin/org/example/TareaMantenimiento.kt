@@ -10,4 +10,4 @@
     
 package org.example
 
-data class TareaMantenimiento(val tipo: TipoTarea, val horasIntervalo: Int, val descripción: String)
+data class TareaMantenimiento(val tipo: TipoTarea, val horasIntervalo: Int, val descripcion: String)
