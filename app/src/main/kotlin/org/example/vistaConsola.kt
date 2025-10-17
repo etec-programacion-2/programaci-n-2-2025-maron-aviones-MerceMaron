@@ -20,7 +20,7 @@ object VistaConsola {
     fun mostrarBienvenida(){
         println("¡Bienvenido al programa de mantenimiento de aviones!")
     }
-    /* 
+    
     fun solicitarModeloMotor(): String{
         println("Por favor, ingrese el modelo del motor: ")
         return readln() //se utiliza para leer una línea completa de texto de entrada y la devuelve como una cadena no nula
@@ -29,7 +29,7 @@ object VistaConsola {
     fun solicitarHorasVuelo(): Int{
         println("Por favor, ingrese las horas de vuelo. Tenga en cuenta que debe ser un número entero: ")
         return readln().toInt() //s.toInt() se usa para convertir un string a un número entero
-    }*/
+    }
 
     fun mostrarResultados(tareas: List<TareaMantenimiento>){
         println ("Las tareas de mantenimiento que debe hacerle a su avión son: ")

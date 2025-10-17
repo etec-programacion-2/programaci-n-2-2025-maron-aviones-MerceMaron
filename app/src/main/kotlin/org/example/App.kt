@@ -26,10 +26,10 @@ fun main() {
     val vista = VistaConsola //Maneja la interacción con el usuario (es un object singleton)
     vista.mostrarBienvenida() //Mostrar mensaje de bienvenida al usuario
     
-    //val modelo = vista.solicitarModeloMotor()
-    //val horas = vista.solicitarHorasVuelo()
+    val modelo = vista.solicitarModeloMotor()
+    val horas = vista.solicitarHorasVuelo()
    
-    //val tareas = servicio.calcularTareasPendientes(modelo, horas) //Calcular tareas pendientes
+    val tareas = servicio.calcularTareasPendientes(modelo, horas) //Calcular tareas pendientes
     
-    //vista.mostrarResultados(tareas) //Mostrar resultados al usuario
+    vista.mostrarResultados(tareas) //Mostrar resultados al usuario
 }

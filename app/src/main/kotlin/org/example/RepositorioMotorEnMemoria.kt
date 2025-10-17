@@ -9,6 +9,17 @@
         Los métodos de la interfaz deben operar sobre esa lista.
     Estimación de Esfuerzo: 2 sesiones.
  */
+/*
+    Título: Crear la clase RepositorioMotorEnMemoria.
+    Descripción: Se creará una primera implementación falsa o mock del repositorio que guarde los datos de los motores en una lista dentro del código. Esto nos permitirá avanzar con el resto de la aplicación sin preocuparnos todavía por la persistencia en archivos.
+    Objetivo de Aprendizaje: Implementación de interfaces, inicialización de datos de prueba.
+    Prerrequisitos: Issue 2.1.
+    Criterios de Aceptación:
+        Debe existir una clase RepositorioMotorEnMemoria que implemente RepositorioMotor.
+        La clase debe tener al menos 2-3 motores de ejemplo pre-cargados en una lista privada.
+        Los métodos de la interfaz deben operar sobre esa lista.
+    Estimación de Esfuerzo: 2 sesiones.
+ */
 package org.example
 
 class RepositorioMotorEnMemoria: RepositorioMotor {
