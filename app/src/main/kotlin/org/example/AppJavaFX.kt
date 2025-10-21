@@ -16,15 +16,6 @@ import javafx.stage.Stage
 import org.example.controllers.MantenimientoController
 import org.example.controllers.TareaParaTabla
 
-/**
-Título: Diseñar y construir la ventana principal de la aplicación con JavaFX.
-Descripción: Se creará la interfaz gráfica donde el usuario podrá introducir los datos del motor y ver los resultados.
-Objetivo de Aprendizaje: Fundamentos de JavaFX (Layouts, Controles) y separación Vista-Controlador.
-Prerrequisitos: Issue 4.2.
-Criterios de Aceptación:
-    Debe existir una ventana principal con campos de texto para el modelo y las horas de vuelo.
-    Debe haber un botón para Calcular y un área (ej: ListView o TableView) para mostrar las tareas resultantes.
-*/
 
 class AppJavaFX : Application() {
     

@@ -2,3 +2,50 @@ Nombre: Mercedes Marón
 
 Escuela: Escuela Técnica de la Universidad de Mendoza
 Año: 4° Informática
+
+----------------------------------- FUNCIÓN DEL PROGRAMA ------------------------------------
+
+El programa se calcular las tareas de mantenimiento que se deben hacer a los motores de aviones (previamente cargados). 
+
+El usuario busca su modelo de motor a partir de una lista desplegable e ingresa las horas de vuelo. Toca el botón Calcular Tareas para visualizar las próximas tareas de mantenimiento que se deben hacer al motor. 
+
+El botón Ver Historial sirve para conocer los modelos que se han buscado recientemente y las tareas que se le realizaron.
+
+El botón Ver Motores sirve para conocer los motores cargados en el sistema.
+
+
+
+
+---------------------------------- FUNCIÓN DE CADA CLASE ------------------------------------
+App
+Es la clase principal que se encarga de ejecutar la función main. Permite cargar las demás clases.
+
+TipoTarea
+Define los diferentes tipos de mantenimiento que se realizará a los motores.
+
+Motor
+Representa un motor de avión con su modelo, fabricante y plan de mantenimiento 
+
+TareMantenimiento
+Contiene la información de las tareas de mantenimiento de los motores, considerando las propiedades de tipo, horasIntervalo, descripción
+
+RepositorioMotor
+Se encarga de obtener todos los motores
+
+RepositorioMotorEnMemoria
+Se crea una lista en memoria con algunos modelos de motores, fabricantes y los detalles de sus tareas de mantenimiento. Cabe aclarar que los parámetros de los motores son representativos y simplificados con el fin de obtener un código más sencillo y fácil de hacer.
+
+ServicioMantenimiento
+Calcula las tareas de mantenimiento a partir del modelo del motor y las horas de vuelo
+
+ServicioMantenimientoImpl
+Calcula si las horas de vuelo actuales son un múltiplo exacto del intervalo de la tarea.
+
+vistaConsola
+Se encarga de ejecutar el programa por consola
+
+AppJavaFX
+Crea la interfaz gráfica de la aplicación
+
+MantenimientoController
+

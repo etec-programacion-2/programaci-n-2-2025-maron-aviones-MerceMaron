@@ -1,28 +1,13 @@
 /*
-    Título: Crear la clase RepositorioMotorEnMemoria.
-    Descripción: Se creará una primera implementación falsa o mock del repositorio que guarde los datos de los motores en una lista dentro del código. Esto nos permitirá avanzar con el resto de la aplicación sin preocuparnos todavía por la persistencia en archivos.
-    Objetivo de Aprendizaje: Implementación de interfaces, inicialización de datos de prueba.
-    Prerrequisitos: Issue 2.1.
-    Criterios de Aceptación:
-        Debe existir una clase RepositorioMotorEnMemoria que implemente RepositorioMotor.
-        La clase debe tener al menos 2-3 motores de ejemplo pre-cargados en una lista privada.
-        Los métodos de la interfaz deben operar sobre esa lista.
-    Estimación de Esfuerzo: 2 sesiones.
+    
  */
-/*
-    Título: Crear la clase RepositorioMotorEnMemoria.
-    Descripción: Se creará una primera implementación falsa o mock del repositorio que guarde los datos de los motores en una lista dentro del código. Esto nos permitirá avanzar con el resto de la aplicación sin preocuparnos todavía por la persistencia en archivos.
-    Objetivo de Aprendizaje: Implementación de interfaces, inicialización de datos de prueba.
-    Prerrequisitos: Issue 2.1.
-    Criterios de Aceptación:
-        Debe existir una clase RepositorioMotorEnMemoria que implemente RepositorioMotor.
-        La clase debe tener al menos 2-3 motores de ejemplo pre-cargados en una lista privada.
-        Los métodos de la interfaz deben operar sobre esa lista.
-    Estimación de Esfuerzo: 2 sesiones.
- */
+
 package org.example
 
+// Se hereada la interfaz RepositorioMotor
 class RepositorioMotorEnMemoria: RepositorioMotor {
+
+    //se crea una lista de motores privada con sus respectivos planes de mantenimiento
     private val motores = listOf(
         Motor(
             modelo = "A320",
@@ -53,10 +38,12 @@ class RepositorioMotorEnMemoria: RepositorioMotor {
         )
     )
 
+    //se implementa el metodo obtenerPorModelo de la interfaz RepositorioMotor para encontrar un motor por su modelo
     override fun obtenerPorModelo(modelo: String): Motor? {
         return motores.find { it.modelo == modelo }
     }
 
+    //se implementa el metodo obtenerTodos de la interfaz RepositorioMotor para obtener todos los motores
     override fun obtenerTodos(): List<Motor> {
         return motores
     }

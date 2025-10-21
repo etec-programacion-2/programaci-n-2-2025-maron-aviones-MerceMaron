@@ -1,16 +1,3 @@
-/*
-Título: Implementar el controlador de JavaFX para conectar la vista con la lógica.
-Descripción: El controlador de la vista recibirá una instancia del ServicioMantenimiento y la usará para responder a los eventos del usuario (como hacer clic en el botón Calcular), demostrando que la lógica de negocio no necesita cambios.
-Objetivo de Aprendizaje: Patrón Controlador, manejo de eventos en JavaFX.
-Prerrequisitos: Issue 5.1, Issue 3.2.
-Criterios de Aceptación:
-   - El controlador debe recibir la instancia de ServicioMantenimiento (vía constructor o un inicializador).
-   - Al hacer clic en Calcular, se debe invocar al servicio.calcularTareasPendientes(...).
-   - Los resultados deben mostrarse correctamente en el área designada de la interfaz.
-*/
-
-
-
 package org.example.controllers
 
 import javafx.beans.property.SimpleIntegerProperty
