@@ -24,6 +24,7 @@ object VistaConsola {
         return readln().toInt() //s.toInt() se usa para convertir un string a un número entero
     }
 
+    //muestra las tareas de mantenimiento
     fun mostrarResultados(tareas: List<TareaMantenimiento>){
         println ("Las tareas de mantenimiento que debe hacerle a su avión son: ")
         for (tarea in tareas){

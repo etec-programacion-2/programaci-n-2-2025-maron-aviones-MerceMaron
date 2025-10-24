@@ -48,4 +48,8 @@ AppJavaFX
 Crea la interfaz gráfica de la aplicación
 
 MantenimientoController
+Maneja las interacciones del usuario con la interfaz, validando los datos ingresados y delegando la lógica de negocio al servicio adecuado (en este caso, el servicio de mantenimiento). La clase MantenimientoController sigue el patrón MVC (Modelo-Vista-Controlador), separando la lógica de presentación (vista) de la lógica de negocio.
+
+build.gradle.kts
+Este archivo fue modificado para que JavaFX pudiera ejecutarse.
 

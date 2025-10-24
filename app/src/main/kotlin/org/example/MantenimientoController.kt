@@ -22,12 +22,10 @@ import org.example.*
  */
 
 class MantenimientoController(
-    private val servicio: ServicioMantenimiento,
-    private val repositorio: RepositorioMotor
-) {
+    private val servicio: ServicioMantenimiento, //contiene la lógica de negocio
+    private val repositorio: RepositorioMotor) { //maneja los motores disponibles
     
-    // Historial de tareas calculadas (para persistencia en la sesión)
-    private val historialTareas = mutableListOf<TareaParaTabla>()
+    private val historialTareas = mutableListOf<TareaParaTabla>() //lista de tareas para la tabla de historial, en la sesión actual
     
     /**
      * Maneja el evento de calcular tareas pendientes.
@@ -44,11 +42,11 @@ class MantenimientoController(
         lblResultado: Label
     ): List<TareaMantenimiento>? {
         try {
-            // 1. Obtener valores de la vista
+            //se toma el valor del motor (ChoiceBox) y las horas (TextField)
             val modeloSeleccionado = choiceBoxModelo.value
             val horasTexto = textFieldHoras.text
             
-            // 2. Validar entrada
+            // se valida que los datos ingresados sean correctos (l modelo no sea nulo ni vacío, las horas sean un número válido y positivo). Si la validación falla, se muestra un mensaje de error en lblResultado.
             val validacionResultado = validarEntrada(modeloSeleccionado, horasTexto)
             if (!validacionResultado.esValido) {
                 actualizarMensajeError(lblResultado, validacionResultado.mensaje)
@@ -57,16 +55,17 @@ class MantenimientoController(
             
             val horas = horasTexto.toInt()
             
-            // 3. Invocar lógica de negocio (ServicioMantenimiento)
+            // Calcular tareas pendientes: Si la entrada es válida, se llama a la función calcularTareasPendientes del servicio de mantenimiento (servicio) para obtener las tareas que deben realizarse en función del modelo de motor y las horas de vuelo.
             val tareasPendientes = servicio.calcularTareasPendientes(modeloSeleccionado!!, horas)
             
-            // 4. Actualizar vista con resultado
+            // Si no hay tareas pendientes, muestra un mensaje de éxito.
+
             if (tareasPendientes.isEmpty()) {
                 actualizarMensajeExito(
                     lblResultado,
                     "No hay tareas de mantenimiento pendientes para $modeloSeleccionado con $horas horas"
                 )
-            } else {
+            } else { //si hay tareas pendientes, muestra una advertencia o incluye las tareas en el historial
                 actualizarMensajeAdvertencia(
                     lblResultado,
                     "Se encontraron ${tareasPendientes.size} tareas pendientes"
@@ -78,10 +77,10 @@ class MantenimientoController(
             
             return tareasPendientes
             
-        } catch (e: IllegalArgumentException) {
+        } catch (e: IllegalArgumentException) { //manejo de errores específicos (parámetros inválidos)
             actualizarMensajeError(lblResultado, "Error: ${e.message}")
-            return null
-        } catch (e: Exception) {
+            return null //se retorna null para indicar que no se pudieron calcular las tareas debido al error.
+        } catch (e: Exception) { //manejo de errores generales (cualquier otro error inesperado)
             actualizarMensajeError(lblResultado, "Error inesperado: ${e.message}")
             return null
         }
