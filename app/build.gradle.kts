@@ -70,9 +70,21 @@ java {
 //Se configura la clase principal de la aplicación para que incie con AppJavaFX
 application {
     // Define the main class for the application.
-    mainClass = "org.example.AppJavaFXKt"
+    mainClass = "org.example.AppKt"
 }
 
+tasks.named<JavaExec>("run") {
+    val osName = "linux"
+    val javafxModules = listOf("javafx.controls", "javafx.fxml")
+
+    jvmArgs = listOf(
+        "--module-path", configurations.runtimeClasspath.get().asPath,
+        "--add-modules", javafxModules.joinToString(",")
+    )
+    
+    // ✅ Habilitar entrada estándar
+    standardInput = System.`in`
+}
 
 //Se configura JUnit Platform para testeo con la tarea test.
 tasks.named<Test>("test") {

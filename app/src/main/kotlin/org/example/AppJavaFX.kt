@@ -388,7 +388,3 @@ class AppJavaFX : Application() {
         popup.show()
     }
 }
-
-fun main() {
-    Application.launch(AppJavaFX::class.java) //se lanza la aplicación JavaFX, mostrando la interfaz gráfica definida en la clase AppJavaFX.
-}
