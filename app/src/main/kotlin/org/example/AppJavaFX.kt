@@ -153,7 +153,14 @@ class AppJavaFX : Application() {
 
         // EventHandler es una interfaz en JavaFX que define un método llamado handle(). Este método es el que se ejecuta cuando ocurre un evento (por ejemplo, un clic en un botón). Básicamente, el EventHandler escucha el evento y, cuando se dispara (en este caso, al hacer clic en el botón), ejecuta una acción definida dentro de su bloque de código.
 
-        btnCalcular.onAction = EventHandler { handleCalcularTareas(primaryStage) } //onAction es un propiedad del botón que se dispara cuando el usuario hace clic sobre el botón. EventHandler es un manejador de eventos que define qué hacer cuando ocurre el usuario hace clic en el botón. En este caso, se llama a la función handleCalcularTareas, pasando la ventana principal primaryStage como argumento. Esto significa que cuando el usuario haga clic en el botón "Calcular Tareas", se mostrará la ventana emergente con los resultados de las tareas pendientes.
+        /* onAction es un propiedad del botón que se dispara cuando el usuario hace clic 
+           sobre el botón. EventHandler es un manejador de eventos que define qué hacer cuando 
+           ocurre el usuario hace clic en el botón. En este caso, se llama a la función 
+           handleCalcularTareas, pasando la ventana principal primaryStage como argumento. 
+           Esto significa que cuando el usuario haga clic en el botón "Calcular Tareas", 
+           se mostrará la ventana emergente con los resultados de las tareas pendientes.
+           */
+        btnCalcular.onAction = EventHandler { handleCalcularTareas(primaryStage) } 
         
         // Botón Ver Historial
         val btnHistorial = Button("Ver Historial")
@@ -232,7 +239,7 @@ class AppJavaFX : Application() {
     //Muestra ventana con resultados de tareas de mantenimiento pendientes.
     
     private fun mostrarVentanaResultados(
-        owner: Stage: El dueño de la ventana emergente (popup), generalmente es la ventana principal de la aplicación.
+        //El dueño de la ventana emergente (popup), generalmente es la ventana principal de la aplicación.
 
         owner: Stage, //El término owner hace referencia a la ventana principal o a la ventana que posee o controla a otra ventana, en este caso, la ventana emergente (popup) es "poseída" por la ventana principal de la aplicación.
         modelo: String, //modelo de motor seleccionado
