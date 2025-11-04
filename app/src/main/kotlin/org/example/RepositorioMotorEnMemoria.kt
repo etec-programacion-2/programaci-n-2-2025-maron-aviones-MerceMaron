@@ -1,7 +1,3 @@
-/*
-    
- */
-
 package org.example
 
 // Se hereada la interfaz RepositorioMotor

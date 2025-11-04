@@ -234,8 +234,6 @@ class AppJavaFX : Application() {
         mostrarVentanaMotores(primaryStage, motores)
     }
     
-    // ===== VENTANAS EMERGENTES =====
-    
     //Muestra ventana con resultados de tareas de mantenimiento pendientes.
     
     private fun mostrarVentanaResultados(

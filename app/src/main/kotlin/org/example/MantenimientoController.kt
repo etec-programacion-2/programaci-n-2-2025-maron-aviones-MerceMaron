@@ -1,3 +1,15 @@
+/*
+Controlador de la interfaz JavaFX que conecta la vista con la lógica de negocio.
+
+Responsabilidades:
+ - Recibir eventos del usuario desde la vista
+ - Validar datos de entrada
+ - Invocar servicios de negocio
+ - Actualizar la vista con los resultados
+Este controlador implementa el patrón MVC separando la lógica de presentación de la lógica
+de negocio (ServicioMantenimiento).
+*/
+
 package org.example.controllers
 
 import javafx.beans.property.SimpleIntegerProperty
@@ -7,19 +19,6 @@ import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
 import org.example.*
-
-/**
- * Controlador de la interfaz JavaFX que conecta la vista con la lógica de negocio.
- * 
- * Responsabilidades:
- * - Recibir eventos del usuario desde la vista
- * - Validar datos de entrada
- * - Invocar servicios de negocio
- * - Actualizar la vista con los resultados
- * 
- * Este controlador implementa el patrón MVC separando la lógica de presentación
- * de la lógica de negocio (ServicioMantenimiento).
- */
 
 class MantenimientoController(
     private val servicio: ServicioMantenimiento, //contiene la lógica del mantenimiento

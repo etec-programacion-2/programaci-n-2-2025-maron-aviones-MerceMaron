@@ -10,7 +10,7 @@ Versión de JavaFX: 20
 
 ----------------------------- PASOS PARA QUE LA APLICACIÓN FUNCIONE -----------------------------
 
-Paso 1 - Ubicarse en la carpeta en donde deseas clonar el repositorio
+Paso 1 - Ubicarse en la carpeta en donde deseas clonar el repositorio.
 cd (nombre carpeta)
 
 Paso 2 - Clonar el repositorio:
