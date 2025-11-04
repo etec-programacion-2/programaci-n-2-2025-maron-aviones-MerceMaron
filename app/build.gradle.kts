@@ -9,9 +9,10 @@ plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     alias(libs.plugins.kotlin.jvm)
 
-    // Apply the application plugin to add support for building a CLI application in Java.
+    // permite hacer una aplicación CLI en Java
     application
 }
+
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -22,19 +23,20 @@ val javafxVersion = "20"
 
 
 dependencies {
-    // Use the Kotlin JUnit 5 integration.
+    // Se configura JUnit para testeo
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 
-    // Use the JUnit 5 integration.
     testImplementation(libs.junit.jupiter.engine)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    // This dependency is used by the application.
+    // Añade la dependencia de Guava de Google, que tiene funcionalidades para trabajar con colecciones, caching, primitivas, concuerrencias, etc.
     implementation(libs.guava)
 
+    //Dependencias de JavaFX
     listOf("base", "controls", "fxml", "graphics").forEach { module ->
         implementation("org.openjfx:javafx-$module:$javafxVersion") {
             artifact {
+                //esta configuración es específicamente para Linux
                 classifier = "linux"
             }
         }
@@ -42,6 +44,7 @@ dependencies {
 }
 
 
+// Configura los argumentos de la JVM para ejecutar una aplicación JavaFX
 tasks.named<JavaExec>("run") {
     val osName = "linux"
     val javafxModules = listOf("javafx.controls", "javafx.fxml")
@@ -53,21 +56,38 @@ tasks.named<JavaExec>("run") {
 }
 
 
-// Apply a specific Java toolchain to ease working on different environments.
+
+// Configura la toolchain para usar Java 21. 
+// Toolchain: conjunto de programas o herramientas de software que se utilizan de forma secuencial para crear un producto. Estas herramientas trabajan en conjunto, donde la salida de una se convierte en la entrada de la siguiente, permitiendo automatizar y estandarizar tareas complejas para lograr eficiencia y reducir errores. 
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
+
+//Se configura la clase principal de la aplicación para que incie con AppJavaFX
 application {
     // Define the main class for the application.
-    mainClass = "org.example.AppJavaFXKt"
+    mainClass = "org.example.AppKt"
 }
 
+tasks.named<JavaExec>("run") {
+    val osName = "linux"
+    val javafxModules = listOf("javafx.controls", "javafx.fxml")
 
+    jvmArgs = listOf(
+        "--module-path", configurations.runtimeClasspath.get().asPath,
+        "--add-modules", javafxModules.joinToString(",")
+    )
+    
+    // ✅ Habilitar entrada estándar
+    standardInput = System.`in`
+}
+
+//Se configura JUnit Platform para testeo con la tarea test.
 tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
 
@@ -77,9 +97,6 @@ tasks.test {
         isFailOnNoMatchingTests = false
     }
 }
-
-
-
 
 
 

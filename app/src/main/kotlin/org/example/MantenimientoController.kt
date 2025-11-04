@@ -1,15 +1,14 @@
 /*
-Título: Implementar el controlador de JavaFX para conectar la vista con la lógica.
-Descripción: El controlador de la vista recibirá una instancia del ServicioMantenimiento y la usará para responder a los eventos del usuario (como hacer clic en el botón Calcular), demostrando que la lógica de negocio no necesita cambios.
-Objetivo de Aprendizaje: Patrón Controlador, manejo de eventos en JavaFX.
-Prerrequisitos: Issue 5.1, Issue 3.2.
-Criterios de Aceptación:
-   - El controlador debe recibir la instancia de ServicioMantenimiento (vía constructor o un inicializador).
-   - Al hacer clic en Calcular, se debe invocar al servicio.calcularTareasPendientes(...).
-   - Los resultados deben mostrarse correctamente en el área designada de la interfaz.
+Controlador de la interfaz JavaFX que conecta la vista con la lógica de negocio.
+
+Responsabilidades:
+ - Recibir eventos del usuario desde la vista
+ - Validar datos de entrada
+ - Invocar servicios de negocio
+ - Actualizar la vista con los resultados
+Este controlador implementa el patrón MVC separando la lógica de presentación de la lógica
+de negocio (ServicioMantenimiento).
 */
-
-
 
 package org.example.controllers
 
@@ -21,47 +20,23 @@ import javafx.scene.control.Label
 import javafx.scene.control.TextField
 import org.example.*
 
-/**
- * Controlador de la interfaz JavaFX que conecta la vista con la lógica de negocio.
- * 
- * Responsabilidades:
- * - Recibir eventos del usuario desde la vista
- * - Validar datos de entrada
- * - Invocar servicios de negocio
- * - Actualizar la vista con los resultados
- * 
- * Este controlador implementa el patrón MVC separando la lógica de presentación
- * de la lógica de negocio (ServicioMantenimiento).
- */
-
 class MantenimientoController(
-    private val servicio: ServicioMantenimiento,
-    private val repositorio: RepositorioMotor
-) {
+    private val servicio: ServicioMantenimiento, //contiene la lógica del mantenimiento
+    private val repositorio: RepositorioMotor) { //maneja los motores disponibles
     
-    // Historial de tareas calculadas (para persistencia en la sesión)
-    private val historialTareas = mutableListOf<TareaParaTabla>()
-    
-    /**
-     * Maneja el evento de calcular tareas pendientes.
-     * 
-     * choiceBoxModelo ComboBox con el modelo seleccionado
-     * textFieldHoras Campo de texto con las horas de vuelo
-     * lblResultado Label para mostrar mensajes al usuario
-     * retorna Lista de tareas pendientes o null si hay error
-     */
-    
+    private val historialTareas = mutableListOf<TareaParaTabla>() //lista de tareas para la tabla de historial, en la sesión actual
+        
     fun calcularTareasPendientes(
-        choiceBoxModelo: ChoiceBox<String>,
-        textFieldHoras: TextField,
+        choiceBoxModelo: ChoiceBox<String>, //recibe el modelo seleccionado
+        textFieldHoras: TextField, //recibe las horas de vuelo ingresadas
         lblResultado: Label
     ): List<TareaMantenimiento>? {
         try {
-            // 1. Obtener valores de la vista
+            //se toma el valor del motor (ChoiceBox) y las horas (TextField)
             val modeloSeleccionado = choiceBoxModelo.value
             val horasTexto = textFieldHoras.text
             
-            // 2. Validar entrada
+            // se valida que los datos ingresados sean correctos (el modelo no sea nulo ni vacío, las horas sean un número válido y positivo). Si la validación falla, se muestra un mensaje de error en lblResultado.
             val validacionResultado = validarEntrada(modeloSeleccionado, horasTexto)
             if (!validacionResultado.esValido) {
                 actualizarMensajeError(lblResultado, validacionResultado.mensaje)
@@ -70,16 +45,18 @@ class MantenimientoController(
             
             val horas = horasTexto.toInt()
             
-            // 3. Invocar lógica de negocio (ServicioMantenimiento)
-            val tareasPendientes = servicio.calcularTareasPendientes(modeloSeleccionado!!, horas)
+            // Calcular tareas pendientes: Si la entrada es válida, se llama a la función calcularTareasPendientes del servicio de mantenimiento (servicio) para obtener las tareas que deben realizarse en función del modelo de motor y las horas de vuelo.
+            val tareasPendientes = servicio.calcularTareasPendientes(modeloSeleccionado!!, horas) //Llama al servicio de negocio para calcular qué tareas deben realizarse para ese modelo y número de horas.
             
-            // 4. Actualizar vista con resultado
+
+            // Si no hay tareas pendientes, muestra un mensaje de éxito.
+
             if (tareasPendientes.isEmpty()) {
                 actualizarMensajeExito(
                     lblResultado,
                     "No hay tareas de mantenimiento pendientes para $modeloSeleccionado con $horas horas"
                 )
-            } else {
+            } else { //si hay tareas pendientes, muestra una advertencia o incluye las tareas en el historial
                 actualizarMensajeAdvertencia(
                     lblResultado,
                     "Se encontraron ${tareasPendientes.size} tareas pendientes"
@@ -91,10 +68,10 @@ class MantenimientoController(
             
             return tareasPendientes
             
-        } catch (e: IllegalArgumentException) {
+        } catch (e: IllegalArgumentException) { //manejo de errores específicos (parámetros inválidos)
             actualizarMensajeError(lblResultado, "Error: ${e.message}")
-            return null
-        } catch (e: Exception) {
+            return null //se retorna null para indicar que no se pudieron calcular las tareas debido al error.
+        } catch (e: Exception) { //manejo de errores generales (cualquier otro error inesperado)
             actualizarMensajeError(lblResultado, "Error inesperado: ${e.message}")
             return null
         }
@@ -104,50 +81,43 @@ class MantenimientoController(
      * Valida los datos ingresados por el usuario.
      */
     private fun validarEntrada(modelo: String?, horas: String?): ResultadoValidacion {
-        if (modelo == null || modelo.isBlank()) {
+        if (modelo == null || modelo.isBlank()) { //se valida que el modelo no sea nulo ni vacío
             return ResultadoValidacion(false, "Por favor seleccione un modelo de motor")
         }
         
-        if (horas.isNullOrBlank()) {
+        if (horas.isNullOrBlank()) { //se valida que las horas no sean nulas ni vacías
             return ResultadoValidacion(false, "Por favor ingrese las horas de vuelo")
         }
         
         val horasNumero = horas.toIntOrNull()
-        if (horasNumero == null) {
+        if (horasNumero == null) { //se valida que las horas sean un número válido
             return ResultadoValidacion(false, "Las horas de vuelo deben ser un número válido")
         }
         
-        if (horasNumero < 0) {
+        if (horasNumero < 0) { //se valida que las horas sean positivas
             return ResultadoValidacion(false, "Las horas de vuelo no pueden ser negativas")
         }
         
         return ResultadoValidacion(true, "")
     }
     
-    /**
-     * Obtiene la lista de modelos disponibles desde el repositorio.
-     */
+    //Obtiene la lista de modelos disponibles desde el repositorio
     fun obtenerModelosDisponibles(): List<String> {
         return repositorio.obtenerTodos().map { it.modelo }
     }
     
-    /**
-     * Obtiene todos los motores del repositorio.
-     */
+    //Obtiene todos los motores del repositorio
     fun obtenerTodosLosMotores(): List<Motor> {
         return repositorio.obtenerTodos()
     }
     
-    /**
-     * Obtiene el historial de tareas calculadas en la sesión actual.
-     */
+    //Obtiene el historial de tareas calculadas en la sesión actual
     fun obtenerHistorial(): List<TareaParaTabla> {
         return historialTareas.toList()
     }
     
-    /**
-     * Agrega tareas al historial de la sesión.
-     */
+    
+    //Convierte cada TareaMantenimiento en un TareaParaTabla (adaptada para la vista)
     private fun agregarAlHistorial(tareas: List<TareaMantenimiento>, modelo: String, horas: Int) {
         val nuevasTareas = tareas.map { tarea ->
             TareaParaTabla(
@@ -157,7 +127,7 @@ class MantenimientoController(
                 SimpleStringProperty("Completada")
             )
         }
-        historialTareas.addAll(nuevasTareas)
+        historialTareas.addAll(nuevasTareas) //Agrega tareas al historial de la sesión
     }
     
     /**
@@ -182,8 +152,7 @@ class MantenimientoController(
         alert.showAndWait()
     }
     
-    // Métodos privados para actualizar mensajes en la vista
-    
+    //Cambia el color y el texto del label según el tipo de mensaje (error, éxito, advertencia)
     private fun actualizarMensajeError(label: Label, mensaje: String) {
         label.text = mensaje
         label.style = "-fx-text-fill: #e74c3c; -fx-font-size: 12px;"
@@ -200,32 +169,30 @@ class MantenimientoController(
     }
 }
 
-/**
- * Clase auxiliar para el resultado de validación.
- */
-private data class ResultadoValidacion(
-    val esValido: Boolean,
-    val mensaje: String
-)
 
-/**
- * Data class para representar tareas en TableView.
- * Esta clase es específica de la vista y no pertenece al modelo de dominio.
- */
+// Representa el resultado de validar los datos de entrada del usuario.
+
+private data class ResultadoValidacion(
+    val esValido: Boolean, //indica si la validación fue exitosa
+    val mensaje: String) 
+
+//Data class para mostrar datos en una TableView.
+//TableView y TexField o Label pueden vincularse a propiedades observables, lo que permite que la interfaz se actualice automáticamente cuando los datos cambian.
+
 data class TareaParaTabla(
-    val tipoProperty: SimpleStringProperty,
+    val tipoProperty: SimpleStringProperty, //SimpleStringProperty representa un texto observable.
     val descripcionProperty: SimpleStringProperty,
-    val horasProperty: SimpleIntegerProperty,
+    val horasProperty: SimpleIntegerProperty, //SimpleIntegerProperty representa un número entero observable. 
     val estadoProperty: SimpleStringProperty
 ) {
-    constructor(tarea: TareaMantenimiento, estado: String = "Pendiente") : this(
-        SimpleStringProperty(tarea.tipo.name),
+    constructor(tarea: TareaMantenimiento, estado: String = "Pendiente") : this( //constructor secundario para crear una instancia a partir de TareaMantenimiento
+        SimpleStringProperty(tarea.tipo.name), //convierte el tipo de tarea (enum) a String
         SimpleStringProperty(tarea.descripcion),
-        SimpleIntegerProperty(tarea.horasIntervalo),
-        SimpleStringProperty(estado)
+        SimpleIntegerProperty(tarea.horasIntervalo), 
+        SimpleStringProperty(estado) //estado de la tarea (Pendiente o Completada)
     )
     
-    val tipo: String get() = tipoProperty.get()
+    val tipo: String get() = tipoProperty.get() //propiedades de solo lectura para acceder a los valores subyacentes
     val descripcion: String get() = descripcionProperty.get()
     val horas: Int get() = horasProperty.get()
     val estado: String get() = estadoProperty.get()
