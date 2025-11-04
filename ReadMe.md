@@ -20,18 +20,17 @@ Paso 3 - Ir a la carpeta del repositorio:
 cd programaci-n-2-2025-maron-aviones-MerceMaron/
 
 Paso 4 - Ejecutar el código:
-gradle run
+./gradlew run
 
 ----------------------------------- FUNCIÓN DEL PROGRAMA ------------------------------------
 
-El programa se calcular las tareas de mantenimiento que se deben hacer a los motores de aviones (previamente cargados). 
+El programa calcula las tareas de mantenimiento que se deben hacer a los motores de aviones (previamente cargados). 
 
-El usuario busca su modelo de motor a partir de una lista desplegable e ingresa las horas de vuelo. Toca el botón Calcular Tareas para visualizar las próximas tareas de mantenimiento que se deben hacer al motor. 
+El usuario busca su modelo de motor e ingresa las horas de vuelo. El programa calcula las tareas de mantenimiento a realizar. 
 
-El botón Ver Historial sirve para conocer los modelos que se han buscado recientemente y las tareas que se le realizaron.
+Dentro de la interfaz gráfica, el botón Ver Historial sirve para conocer los modelos que se han buscado recientemente y las tareas que se le realizaron. El botón Ver Motores sirve para conocer los motores cargados en el sistema y su plan de mantenimiento.
 
-El botón Ver Motores sirve para conocer los motores cargados en el sistema y su plan de mantenimiento.
-
+Nota: los nombres de los motores se han modificado cambiándolos por el modelo del avión para que su lectura, escritura e interpretación sea más sencilla y clara.
 
 
 ---------------------------------- FUNCIÓN DE CADA CLASE ------------------------------------
