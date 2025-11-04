@@ -35,7 +35,16 @@ class RepositorioMotorEnMemoria: RepositorioMotor {
                 TareaMantenimiento(TipoTarea.REEMPLAZO_MAGNETOS, 25, "Reemplazar magnetos"),
                 TareaMantenimiento(TipoTarea.INSPECCION_GENERAL, 20, "Revisión detallada de todos los sistemas y componentes para identificar daños ocultos, evaluar desgastes y cumplir con las normas de seguridad y aeronavegabilidad")
             )
+        ),
+        Motor(
+            modelo = "PA-11",
+            fabricante = "Continental",
+            planMantenimiento = listOf(
+                TareaMantenimiento(TipoTarea.REEMPLAZO_MAGNETOS, 3, "Reemplazar magnetos"),
+                TareaMantenimiento(TipoTarea.CAMBIO_FILTRO, 14, "Limpiar o reemplazar los filtros de aire")
+            )
         )
+        
     )
 
     //se implementa el metodo obtenerPorModelo de la interfaz RepositorioMotor para encontrar un motor por su modelo

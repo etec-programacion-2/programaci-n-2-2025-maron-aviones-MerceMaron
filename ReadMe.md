@@ -2,33 +2,25 @@ Nombre: Mercedes Marón
 Escuela: Escuela Técnica de la Universidad de Mendoza
 Año: 4° Informática
 
------------------------------------------- VERSIONES ---------------------------------------------
+------------------------------------------ VERSIONES -------------------------------------------
 
 Versión de Gradle: 9.0.0
 Versión de Java: 21
 Versión de JavaFX: 20
 
------------------------------ PASOS PARA QUE LA APLICACIÓN FUNCIONE ------------------------------
+----------------------------- PASOS PARA QUE LA APLICACIÓN FUNCIONE -----------------------------
 
 Paso 1 - Ubicarse en la carpeta en donde deseas clonar el repositorio
-
 cd (nombre carpeta)
 
 Paso 2 - Clonar el repositorio:
-
 git clone git@github.com:etec-programacion-2/programaci-n-2-2025-maron-aviones-MerceMaron.git
 
-Paso 3 - Abrir el código en Visual Studio Code:
-
-code programaci-n-2-2025-maron-aviones-MerceMaron/
+Paso 3 - Ir a la carpeta del repositorio:
+cd programaci-n-2-2025-maron-aviones-MerceMaron/
 
 Paso 4 - Ejecutar el código:
-
-Abrir la terminal de Visual Studio Code.
-Ejecutar el comando: 
-
 gradle run
-
 
 ----------------------------------- FUNCIÓN DEL PROGRAMA ------------------------------------
 
@@ -38,14 +30,14 @@ El usuario busca su modelo de motor a partir de una lista desplegable e ingresa 
 
 El botón Ver Historial sirve para conocer los modelos que se han buscado recientemente y las tareas que se le realizaron.
 
-El botón Ver Motores sirve para conocer los motores cargados en el sistema.
+El botón Ver Motores sirve para conocer los motores cargados en el sistema y su plan de mantenimiento.
 
 
 
 ---------------------------------- FUNCIÓN DE CADA CLASE ------------------------------------
 
 App
-Es la clase principal que se encarga de ejecutar la función main. Permite cargar las demás clases. App permite ejecutar ejecutar el programa mediante consola.
+Es la clase principal que se encarga de ejecutar la función main, en donde se pregunta al usuario si desea ejecutar el programa por consola de comandos o con interfaz gráfica. En función de la respuesta, se ejecuta vistaConsola o AppJavaFX.
 
 TipoTarea
 Define los diferentes tipos de mantenimiento que se realizará a los motores.
@@ -63,13 +55,13 @@ RepositorioMotorEnMemoria
 Se crea una lista en memoria con algunos modelos de motores, fabricantes y los detalles de sus tareas de mantenimiento. Cabe aclarar que los parámetros de los motores son representativos y simplificados con el fin de obtener un código más sencillo y fácil de hacer.
 
 ServicioMantenimiento
-Calcula las tareas de mantenimiento a partir del modelo del motor y las horas de vuelo
+Calcula las tareas de mantenimiento a partir del modelo del motor y las horas de vuelo.
 
 ServicioMantenimientoImpl
 Calcula si las horas de vuelo actuales son un múltiplo exacto del intervalo de la tarea.
 
 vistaConsola
-Se encarga de ejecutar el programa por consola.
+Permite la ejecución del programa mediante consola de comandos.
 
 AppJavaFX
 Crea la interfaz gráfica de la aplicación.
@@ -78,5 +70,5 @@ MantenimientoController
 Maneja las interacciones del usuario con la interfaz, validando los datos ingresados y delegando la lógica de negocio al servicio adecuado (en este caso, el servicio de mantenimiento). La clase MantenimientoController sigue el patrón MVC (Modelo-Vista-Controlador), separando la lógica de presentación (vista) de la lógica de negocio.
 
 build.gradle.kts
-Este archivo fue modificado para que JavaFX pudiera ejecutarse. El archivo reconoce como mainClass a AppJavaFX porque es la que maneja la interfaz gráfica, lo que hace al código más interactivo y fácil de usar.
+Este archivo fue modificado para que JavaFX pudiera ejecutarse. El archivo reconoce como mainClass a App.
 

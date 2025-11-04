@@ -8,13 +8,11 @@ package org.example
 import javafx.application.Application
 
 fun main() {
-    println("Seleccione el modo de ejecución:")
-    println("1. Interfaz de línea de comandos (CLI)")
-    println("2. Interfaz gráfica (GUI)")
+    println("Seleccione el modo de ejecución:\n1. Interfaz de línea de comandos (CLI)\n2. Interfaz gráfica (GUI)")
     
     val opcion= readln().trim()
 
-    if opcion == "1" {
+    if (opcion == "1") {
         println("\n--- Modo CLI seleccionado ---\n")
         ejecutarCLI()
     } else {
