@@ -14,8 +14,35 @@ la comunicación entre diferentes partes del sistema. */
 package org.example
 import javafx.application.Application
 
+fun main() {
+    App().iniciar()
+}
+
 class App {
-    fun ejecutarCLI() {
+    fun iniciar() {
+        println("Seleccione el modo de ejecución:")
+        println("1. Interfaz de línea de comandos (CLI)")
+        println("2. Interfaz gráfica (GUI)")
+        
+        val opcion = readln().trim()
+        
+        when (opcion) {
+            "1" -> {
+                println("\n--- Modo CLI seleccionado ---\n")
+                ejecutarCLI()
+            }
+            "2" -> {
+                println("\n--- Modo GUI seleccionado ---\n")
+                ejecutarGUI()
+            }
+            else -> {
+                println("\n--- Modo GUI seleccionado por defecto ---\n")
+                ejecutarGUI()
+            }
+        }
+    }
+    
+    private fun ejecutarCLI() {
         val repositorio = RepositorioMotorEnMemoria()
         val servicio = ServicioMantenimientoImpl(repositorio)
         val vista = VistaConsola
@@ -27,22 +54,7 @@ class App {
         vista.mostrarResultados(tareas)
     }
     
-    fun ejecutarGUI() {
+    private fun ejecutarGUI() {
         Application.launch(AppJavaFX::class.java)
-    }
-}
-
-fun main() {
-    println("Seleccione el modo de ejecución:\n1. Interfaz de línea de comandos (CLI)\n2. Interfaz gráfica (GUI)")
-    
-    val opcion = readln().trim()
-    val app = App()
-    
-    if (opcion == "1") {
-        println("\n--- Modo CLI seleccionado ---\n")
-        app.ejecutarCLI()
-    } else {
-        println("\n--- Modo GUI seleccionado ---\n")
-        app.ejecutarGUI()
     }
 }
