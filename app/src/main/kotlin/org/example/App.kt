@@ -14,10 +14,6 @@ la comunicación entre diferentes partes del sistema. */
 package org.example
 import javafx.application.Application
 
-fun main() {
-    App().iniciar()
-}
-
 class App {
     fun iniciar() {
         println("Seleccione el modo de ejecución:")
@@ -57,4 +53,8 @@ class App {
     private fun ejecutarGUI() {
         Application.launch(AppJavaFX::class.java)
     }
+}
+
+fun main() {
+    App().iniciar()
 }
