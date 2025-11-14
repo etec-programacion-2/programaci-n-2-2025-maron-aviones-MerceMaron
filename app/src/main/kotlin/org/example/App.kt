@@ -14,49 +14,47 @@ la comunicación entre diferentes partes del sistema. */
 package org.example
 import javafx.application.Application
 
-fun main() {
-    println("Seleccione el modo de ejecución:\n1. Interfaz de línea de comandos (CLI)\n2. Interfaz gráfica (GUI)")
-    
-    val opcion= readln().trim()
-
-    if (opcion == "1") {
-        println("\n--- Modo CLI seleccionado ---\n")
-        ejecutarCLI()
-    } else {
-        println("\n--- Modo GUI seleccionado ---\n")
-        ejecutarGUI()
+class App {
+    fun iniciar() {
+        println("Seleccione el modo de ejecución:")
+        println("1. Interfaz de línea de comandos (CLI)")
+        println("2. Interfaz gráfica (GUI)")
+        
+        val opcion = readln().trim()
+        
+        when (opcion) {
+            "1" -> {
+                println("\n--- Modo CLI seleccionado ---\n")
+                ejecutarCLI()
+            }
+            "2" -> {
+                println("\n--- Modo GUI seleccionado ---\n")
+                ejecutarGUI()
+            }
+            else -> {
+                println("\n--- Modo GUI seleccionado por defecto ---\n")
+                ejecutarGUI()
+            }
+        }
     }
-
+    
+    private fun ejecutarCLI() {
+        val repositorio = RepositorioMotorEnMemoria()
+        val servicio = ServicioMantenimientoImpl(repositorio)
+        val vista = VistaConsola
+        
+        vista.mostrarBienvenida()
+        val modelo = vista.solicitarModeloMotor()
+        val horas = vista.solicitarHorasVuelo()
+        val tareas = servicio.calcularTareasPendientes(modelo, horas)
+        vista.mostrarResultados(tareas)
+    }
+    
+    private fun ejecutarGUI() {
+        Application.launch(AppJavaFX::class.java)
+    }
 }
 
-fun ejecutarCLI() {
-    //Maneja el almacenamiento y recuperación de datos de motores
-    val repositorio = RepositorioMotorEnMemoria() 
-
-    //Contiene las reglas de negocio para el mantenimiento de motores
-    val servicio = ServicioMantenimientoImpl(repositorio)  
-
-    /*
-    Maneja la interacción con el usuario (es un object singleton - un patrón de diseño que 
-    garantiza que una clase tenga solo una instancia en toda la aplicación y provee un punto de 
-    acceso global a ella)
-    */
-    val vista = VistaConsola 
-    
-    //Mostrar mensaje de bienvenida al usuario
-    vista.mostrarBienvenida() 
-    
-    val modelo = vista.solicitarModeloMotor()
-    val horas = vista.solicitarHorasVuelo()
-   
-    //Calcular tareas pendientes
-    val tareas = servicio.calcularTareasPendientes(modelo, horas) 
-    
-    //Mostrar resultados al usuario
-    vista.mostrarResultados(tareas)    
-}
-
-//se lanza la aplicación JavaFX, mostrando la interfaz gráfica definida en la clase AppJavaFX.
-fun ejecutarGUI() {
-    Application.launch(AppJavaFX::class.java) 
+fun main() {
+    App().iniciar()
 }
